@@ -34,7 +34,7 @@ else:
 
 # Data length should be equal 72, if not, it's missing something
 if len(data) != 72:
-    print("You didn't enter all the data, please double check it.\n")
+    print("You didn't enter all the data or you either entered too much data, please double check it.\n")
     sys.exit(1)
 
 # Parse the data
@@ -87,18 +87,21 @@ print("Card Info:\n\tAdministration Code: {}\n\tEmission Date: {}\n\tMirror of 3
 realchecksum = compute_checksum(data[36:48])
 if realchecksum != int(checksum):
     print("/!\\ ERROR: Checksum at 13rd character of second line /!\\")
+    print("This is most likely a fake ID card")
     print("Found {}, excepted {}".format(checksum, realchecksum))
     sys.exit(1)
     
 realchecksum = compute_checksum(data[63:69])
 if realchecksum != int(checksum_1):
     print("/!\\ ERROR: Checksum at 34th character of second line /!\\")
+    print("This is most likely a fake ID card")
     print("Found {}, excepted {}".format(checksum_1, realchecksum))
     sys.exit(1)
     
 realchecksum = compute_checksum(data[:71])
 if realchecksum != int(ultimate_checksum):
     print("/!\\ ERROR: Checksum at last character of second line /!\\")
+    print("This is most likely a fake ID card")
     print("Found {}, excepted {}".format(ultimate_checksum, realchecksum))
     sys.exit(1)
 
